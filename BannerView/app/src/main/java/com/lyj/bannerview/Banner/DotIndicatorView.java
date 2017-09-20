@@ -78,6 +78,8 @@ public class DotIndicatorView extends View {
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap,0,0,paint);
 
+        bitmap.recycle();
+        bitmap = null;
         return circleBitmap;
     }
 

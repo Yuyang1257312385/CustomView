@@ -8,12 +8,13 @@ import android.view.View;
 
 public abstract class BannerAdapter {
 
+
     /**
      * 根据位置获取VIewPager里面的子View
      * @param position
      * @return
      */
-    public abstract View getView(int position);
+    public abstract View getView(int position,View convertView);
 
 
     /**

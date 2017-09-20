@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,8 @@ import java.util.List;
 
 public class ActBanner extends Activity {
 
+    private Button mNextBtn;
+
     private BannerView mBannerView;
 
     private List<BannerBean> mBannerBeanList;
@@ -29,8 +33,16 @@ public class ActBanner extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_banner);
+        mNextBtn = (Button) findViewById(R.id.btn_next);
         mBannerView = (BannerView) findViewById(R.id.banner_view);
         initData();
+
+        mNextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActNext.actionStart(ActBanner.this,"next");
+            }
+        });
 
     }
 
@@ -42,11 +54,24 @@ public class ActBanner extends Activity {
 
         mBannerView.setAdapter(new BannerAdapter() {
             @Override
-            public View getView(int position) {
-
-                ImageView imageView = new ImageView(ActBanner.this);
-                BannerBean bannerBean = mBannerBeanList.get(position%mBannerBeanList.size());
+            public View getView(final int position,View convertView) {
+                ImageView imageView = null;
+                if(convertView != null){
+                    imageView = (ImageView) convertView;
+                    Log.d("BannerLog","reuse == " +imageView);
+                }else {
+                    imageView = new ImageView(ActBanner.this);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    Log.d("BannerLog","create == " +imageView);
+                }
+                BannerBean bannerBean = mBannerBeanList.get(position);
                 Glide.with(ActBanner.this).load(bannerBean.getUrl()).into(imageView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActNext.actionStart(ActBanner.this,mBannerBeanList.get(position).getTitle());
+                    }
+                });
                 return imageView;
             }
 
@@ -55,18 +80,14 @@ public class ActBanner extends Activity {
                 return mBannerBeanList.size();
             }
 
+            //若不需要显示title的时候，不重写此方法
             @Override
             public String getDesc(int position) {
                 return mBannerBeanList.get(position).getTitle();
             }
         });
-        mBannerView.setScrollerDuration(2000);
         mBannerView.startRoll();
 
     }
 
-    public static void actionStart(Context context){
-        Intent intent = new Intent(context,ActBanner.class);
-        context.startActivity(intent);
-    }
 }
