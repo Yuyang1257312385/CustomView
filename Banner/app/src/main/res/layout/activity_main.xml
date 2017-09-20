@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lyj.banner.MainActivity">
+
+    <com.lyj.bannerlib.Banner.BannerView
+        android:id="@+id/banner_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        >
+
+    </com.lyj.bannerlib.Banner.BannerView>
+
+    <!--app:dotIndicatorFocus="#00ff00"-->
+    <!--app:dotIndicatorNormal="#ffffff"-->
+    <!--app:dotSize="4dp"-->
+    <!--app:dotDistance="9dp"-->
+    <!--app:dotGrivity="right"-->
+    <!--app:bottomColor="#99e1e1e1"-->
+    <!--app:widthPercent="25"-->
+    <!--app:heightPercent="16"-->
+    <!--app:intervalTime="10000"-->
+    <!--app:switchTime="20000"-->
+</RelativeLayout>
